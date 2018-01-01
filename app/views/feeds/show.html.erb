@@ -1,9 +1,23 @@
 <p id="notice"><%= notice %></p>
 
+<h1><%= @feed.title %></h1>
+
+<%= link_to @feed.image_link do %>
+  <% image_tag @feed.image_url %>
+<% end %>
+
+<p class="feed-description">
+  <%= @feed.description %>
+</p>
+
 <p>
   <strong>Url:</strong>
   <%= @feed.url %>
 </p>
+
+<% @feed.items.each do |item| %>
+  <%= render "feed_item", item: item %>
+<% end %>
 
 <%= link_to 'Edit', edit_feed_path(@feed) %> |
 <%= link_to 'Back', feeds_path %>
