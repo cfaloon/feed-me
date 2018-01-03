@@ -6,7 +6,7 @@
   <thead>
     <tr>
       <th>Url</th>
-      <th colspan="3"></th>
+      <th colspan="4"></th>
     </tr>
   </thead>
 
@@ -14,6 +14,13 @@
     <% @feeds.each do |feed| %>
       <tr>
         <td><%= feed.url %></td>
+        <td>
+          <% if @user_feeds.exists? feed.id %>
+            <%= render 'unsubscribe_button', id: @subscriptions.find_by(feed_id: feed.id).id %>
+          <% else %>
+            <%= render 'subscribe_button', feed_id: feed.id %>
+          <% end %>
+        </td>
         <td><%= link_to 'Show', feed %></td>
         <td><%= link_to 'Edit', edit_feed_path(feed) %></td>
         <td><%= link_to 'Destroy', feed, method: :delete, data: { confirm: 'Are you sure?' } %></td>
