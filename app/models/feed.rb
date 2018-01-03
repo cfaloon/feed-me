@@ -10,15 +10,19 @@ class Feed < ApplicationRecord
     @items ||= self.rss_response['channel']['item'].map { |item_hash| FeedItem.new(item_hash) }
   end
 
-  %w(url title link).each do |attribute|
-    define_method "image_#{attribute}" do
-      self.rss_response['channel']['image'][attribute]
-    end
+  def image
+    self.rss_response['channel']['image']['url'] || self.rss_response['channel']['image']['href']
   end
 
-  %w(title description).each do |method_name|
-    define_method method_name do
-      self.rss_response['channel'][method_name]
+  def title
+    self.rss_response['channel']['title']
+  end
+
+  def description
+    @description ||= if self.rss_response['channel']['description'].class == Array
+      @description = self.rss_response['channel']['description'].first
+    else
+      @description = self.rss_response['channel']['description']
     end
   end
 end
