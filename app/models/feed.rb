@@ -1,5 +1,7 @@
 class Feed < ApplicationRecord
 
+  validates :url, uniqueness: true
+
   def rss_response
     @rss_response ||= HTTParty.get(self.url)['rss']
   end
