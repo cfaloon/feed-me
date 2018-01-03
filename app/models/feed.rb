@@ -5,7 +5,7 @@ class Feed < ApplicationRecord
   end
 
   def items
-    self.rss_response['channel']['item']
+    @items ||= self.rss_response['channel']['item'].map { |item_hash| FeedItem.new(item_hash) }
   end
 
   %w(url title link).each do |attribute|
