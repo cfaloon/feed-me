@@ -5,6 +5,8 @@ class FeedsController < ApplicationController
   # GET /feeds.json
   def index
     @feeds = Feed.all
+    @subscriptions = current_user.subscriptions
+    @user_feeds = current_user.feeds
   end
 
   # GET /feeds/1

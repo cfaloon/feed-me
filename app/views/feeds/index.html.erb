@@ -15,8 +15,8 @@
       <tr>
         <td><%= feed.url %></td>
         <td>
-          <% if current_user.feeds.pluck(:id).include? feed.id %>
-            <%= render 'unsubscribe_button', id: Subscription.find_by(user_id: current_user.id, feed_id: feed.id).id %>
+          <% if @user_feeds.exists? feed.id %>
+            <%= render 'unsubscribe_button', id: @subscriptions.find_by(feed_id: feed.id).id %>
           <% else %>
             <%= render 'subscribe_button', feed_id: feed.id %>
           <% end %>
