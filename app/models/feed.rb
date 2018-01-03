@@ -1,5 +1,8 @@
 class Feed < ApplicationRecord
-
+  # relations
+  has_many :subscriptions
+  has_many :users, through: :subscriptions
+  # validations
   validates :url, uniqueness: true
 
   def rss_response
