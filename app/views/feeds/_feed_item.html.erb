@@ -1,6 +1,8 @@
 <div class="feed-item">
   <%= link_to item.link do %>
   <h3><%= item.title %></h3>
-
+  <p>
+    <%= item.description.html_safe %>
+  </p>
   <% end %>
 </div>

@@ -1,3 +1,6 @@
+require 'rss'
+require 'open-uri'
+
 class Feed < ApplicationRecord
   # relations
   has_many :subscriptions
@@ -6,26 +9,22 @@ class Feed < ApplicationRecord
   validates :url, uniqueness: true
 
   def rss_response
-    @rss_response ||= HTTParty.get(self.url)['rss']
+    @rss_response ||= RSS::Parser.parse(open(self.url))
   end
 
   def items
-    @items ||= self.rss_response['channel']['item'].map { |item_hash| FeedItem.new(item_hash) }
+    self.rss_response.items
   end
 
   def image
-    self.rss_response['channel']['image']['url'] || self.rss_response['channel']['image']['href']
+    self.rss_response.image ? self.rss_response.image.url : nil
   end
 
   def title
-    self.rss_response['channel']['title']
+    self.rss_response.channel.title
   end
 
   def description
-    @description ||= if self.rss_response['channel']['description'].class == Array
-      @description = self.rss_response['channel']['description'].first
-    else
-      @description = self.rss_response['channel']['description']
-    end
+    self.rss_response.channel.description
   end
 end
