@@ -22,8 +22,6 @@ gem 'coffee-rails', '~> 4.2'
 gem 'turbolinks', '~> 5'
 # devise for authentication
 gem 'devise'
-# ain't no party like an HTTParty
-gem 'httparty'
 # jquery
 gem 'jquery-rails'
 # bootstrap for some style

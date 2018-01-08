@@ -2,7 +2,9 @@
 
 <h1><%= @feed.title %></h1>
 
-<%= image_tag @feed.image, class: 'img-fluid' %>
+<% if @feed.image %>
+  <%= image_tag @feed.image, class: 'img-fluid' %>
+<% end %>
 
 <p class="feed-description">
   <%= @feed.description %>
